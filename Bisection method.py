@@ -25,7 +25,7 @@ else:
 
 c_prev = c
 
-while programmed_error < error:
+while programmed_error < error:      # here it should be <= ?
     c = round((a + b) / 2, 4)
     error = round(abs(c - c_prev), 4)
     c_prev = c
