@@ -2,21 +2,26 @@
 
 import math
 import numpy as np
-import sympy as sp
-from sympy import *
-
-x = Symbol('x')
 
 def f(x):
     return (math.e ** (- x)) - x
 
 def f_prime(x):
-    return ((math.e ** (- x)) - x).diff(x)
+    return (-math.e ** (-x)) - 1
 
-
-print(f(2))
-print(f_prime(x))
-
-xi = float(input('Insert starting point: '))
+x_prev = float(input('Insert starting point: '))
 programmed_error = float(input('Insert programmed error: '))
+i = 0
+error = 20000
 
+print('i', 'xi', 'f(xi)', "f'(xi)", '|E|')
+print(i, x_prev, f(x_prev), f_prime(x_prev), '-')
+
+while programmed_error <= error:
+    xi = x_prev - (f(x_prev) / f_prime(x_prev))
+    f_xi = f(xi)
+    f_prime_xi = f_prime(xi)
+    error = abs(xi - x_prev)
+    i += 1
+    x_prev = xi
+    print(i, xi, f(xi), f_prime(xi), error)
