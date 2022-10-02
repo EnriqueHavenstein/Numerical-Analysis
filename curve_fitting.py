@@ -118,6 +118,49 @@ def power_law(xi, yi):
         print('Error')
 
 
+# growth model
+# y = A * (x / (b + x))
+
+def growth_model(xi, yi):
+    if len(xi) == len(yi):
+        n = len(xi)                     # number of points (xi, yi)
+        xi_inv = []
+        yi_inv = []
+        xi_inv_square = []
+        xi_inv_yi_inv = []
+        for i in range(1, n + 1):
+            xi_inv.append((1 / xi[i - 1]))
+            yi_inv.append(1 / (yi[i - 1]))
+            xi_inv_square.append(xi_inv[i - 1] ** 2)
+            xi_inv_yi_inv.append(xi_inv[i - 1] * yi_inv[i - 1])
+        print('xi: {}'.format(xi))
+        print('Inverse xi: {}'.format(xi_inv))
+        print('yi: {}'.format(yi))
+        print('Inverse yi: {}'.format(yi_inv))
+        print('Inverse xi square: {}'.format(xi_inv_square))
+        print('Inverse xi * inverse yi: {}'.format(xi_inv_yi_inv))
+
+        print('Sum inverse xi = {}'.format(sum(xi_inv)))
+        print('Sum inverse yi = {}'.format(sum(yi_inv)))
+        print('Sum inverse xi square = {}'.format(sum(xi_inv_square)))
+        print('Sum inverse xi * inverse yi = {}'.format(sum(xi_inv_yi_inv)))
+
+        a1 = ((n * sum(xi_inv_yi_inv) - sum(xi_inv) * sum(yi_inv)) / (n * sum(xi_inv_square) - (sum(xi_inv)) ** 2))
+        a0 = np.mean(yi_inv) - a1 * np.mean(xi_inv)
+
+        A = 1 / a0
+        B = A * a1
+
+        print('a0 = {}'.format(a0))
+        print('a1 = {}'.format(a1))
+        print('A = {}'.format(A))
+        print('B = {}'.format(B))
+
+        print('y = {} . (x / ({} + x))'.format(A, B))
+    else:
+        print('Error')              #           #
+
+
 if __name__ == '__main__':
     xi_lls = [1, 2, 3, 4, 5, 6, 7]
     yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
@@ -127,3 +170,4 @@ if __name__ == '__main__':
     yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
     exponential_model(xi_exp, yi_exp)
     power_law(xi_exp, yi_exp)
+    growth_model(xi_exp, yi_exp)
