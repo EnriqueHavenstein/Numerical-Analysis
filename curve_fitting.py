@@ -161,6 +161,20 @@ def growth_model(xi, yi):
         print('Error')              #           #
 
 
+# newton polynomial
+
+
+def newton_polynomial(xi, yi):
+
+    for n in range(0, len(xi)):
+        if n == 0:
+            fn(x) = f(xo)
+        if n == 1:
+            fn(x) += f[x1,x0](x-x0)
+        if n == 2:
+            fn(x) += f[x2,x1,x0](x-x0)(x-x1)
+
+
 if __name__ == '__main__':
     xi_lls = [1, 2, 3, 4, 5, 6, 7]
     yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
