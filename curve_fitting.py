@@ -162,6 +162,7 @@ def growth_model(xi, yi):
 
 
 # newton polynomial
+
 # (    for n in range(0, len(xi)):
 #         if n == 0:
 #             fn(x) = f(xo)
@@ -183,8 +184,12 @@ print(n)
 fs = np.zeros((n, n))
 print(fs)
 
+# cubic spline
 
+xi_exp = [0, 1, 2, 3]
+yi_exp = [1, 2.7182, 7.3891, 20.0855]
 
+n = range(xi_exp)
 
 if __name__ == '__main__':
     xi_lls = [1, 2, 3, 4, 5, 6, 7]
