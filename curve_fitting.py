@@ -162,17 +162,28 @@ def growth_model(xi, yi):
 
 
 # newton polynomial
+# (    for n in range(0, len(xi)):
+#         if n == 0:
+#             fn(x) = f(xo)
+#         if n == 1:
+#             fn(x) += f[x1,x0](x-x0)
+#         if n == 2:
+#             fn(x) += f[x2,x1,x0](x-x0)(x-x1))
+
+# def newton_polynomial(xi, yi):
+
+points = [
+            (0, 1),
+            (1, 2.7182),
+            (2, 7.3891),
+            (3, 20.0855)
+    ]
+n = len(points)
+print(n)
+fs = np.zeros((n, n))
+print(fs)
 
 
-def newton_polynomial(xi, yi):
-
-    for n in range(0, len(xi)):
-        if n == 0:
-            fn(x) = f(xo)
-        if n == 1:
-            fn(x) += f[x1,x0](x-x0)
-        if n == 2:
-            fn(x) += f[x2,x1,x0](x-x0)(x-x1)
 
 
 if __name__ == '__main__':
@@ -185,3 +196,10 @@ if __name__ == '__main__':
     exponential_model(xi_exp, yi_exp)
     power_law(xi_exp, yi_exp)
     growth_model(xi_exp, yi_exp)
+
+    points = [
+            (0, 1),
+            (1, 2.7182),
+            (2, 7.3891),
+            (3, 20.0855)
+    ]
