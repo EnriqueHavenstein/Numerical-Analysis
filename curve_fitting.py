@@ -2,6 +2,7 @@
 
 import math
 import numpy as np
+import sympy as sp
 
 # linear least squares
 
@@ -179,17 +180,58 @@ points = [
             (2, 7.3891),
             (3, 20.0855)
     ]
-n = len(points)
-print(n)
-fs = np.zeros((n, n))
-print(fs)
 
-# cubic spline
+# cubic splines
 
-xi_exp = [0, 1, 2, 3]
-yi_exp = [1, 2.7182, 7.3891, 20.0855]
 
-n = range(xi_exp)
+def cubic_splines(x, y, h):
+    w = sp.Symbol('w')
+
+    n = len(x)
+    print("n:", n)
+    alpha = []
+
+    # i[0] = 1, mu[0] = 0, z[0] = 0
+    i = [1]
+    mu = [0]
+    z = [0]
+
+    for j in range(1, n - 1):
+        alpha.append((3 / h[j]) * (y[j + 1] - y[j]) - (3 / h[j - 1]) * (y[j] - y[j - 1]))
+        i.append(2 * (x[j + 1] - x[j - 1]) - h[j - 1] * mu[j - 1])
+        mu.append(h[j] / i[j])
+        z.append((alpha[j - 1] - h[j - 1] * z[j - 1]) / i[j])
+
+    print("alpha: ", alpha)
+    print("I: ", i)
+    print("mu: ", mu)
+    print("z: ", z)
+
+    # i[n] = 1, z[n] = 0, c[n] = 0
+    i.append(1)
+    z.append(0)
+
+    c = np.zeros(n)
+    b = []
+    d = []
+
+    for i in range(n - 2, -1, -1):
+        c[i] = (z[i] - mu[i] * c[i + 1])
+        b.append((y[i + 1] - y[i]) / h[i] - h[i] * (c[i + 1] + 2 * c[i]) / 3)
+        d.append((c[i + 1] - c[i]) / 3 * h[i])
+
+    print("c: ", c)
+    b = list(reversed(b))
+    print("b: ", b)
+    d = list(reversed(d))
+    print("d: ", d)
+
+    polynomial = 0
+    for i in range(n - 1):
+        polynomial = y[i] + b[i] * (w - x[i]) + c[i] * (w - x[i]) ** 2 + d[i] * (w - x[i]) ** 3
+        polynomial = sp.simplify(polynomial)
+        print("Polynomial ", i, ": ", polynomial)
+
 
 if __name__ == '__main__':
     xi_lls = [1, 2, 3, 4, 5, 6, 7]
@@ -202,9 +244,8 @@ if __name__ == '__main__':
     power_law(xi_exp, yi_exp)
     growth_model(xi_exp, yi_exp)
 
-    points = [
-            (0, 1),
-            (1, 2.7182),
-            (2, 7.3891),
-            (3, 20.0855)
-    ]
+    # for cubic splines
+    x = [0.0, 1.0, 2.0, 3.0]
+    y = [1.0, 2.7182, 7.3891, 20.0855]
+    h = [1.0, 1.0, 1.0]
+    cubic_splines(x, y, h)
