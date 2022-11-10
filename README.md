@@ -1,7 +1,7 @@
 # Numerical-Analysis
 Solving problems using numeric approximation 
 
-python libraries:
+Python libraries:
 
     - Numpy
 
@@ -17,4 +17,3 @@ Methods:
    3) Newton-Raphson
    4) Secant method
 2) System of linear equations
-   1) 
